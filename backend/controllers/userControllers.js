@@ -14,14 +14,14 @@ router.post('/register',async (req,res) => {
 
     // STEP-2 Validation
     if(!fname || !lname || !email || !password){
-        return res.send("Please fill all the fields");
+        return res.status(400).send("Please enter all fields");
     }
 
     try {
         // STEP-3 Check if user already exists
         const existingUser = await userModel.findOne({email});
         if(existingUser){
-            return res.send("User already exists");
+            return res.status(400).send("User already exists");
         }
 
         // password hashing
@@ -40,7 +40,10 @@ router.post('/register',async (req,res) => {
         await newUser.save();
 
         // send response
-        res.send("User registered successfully");
+        res.status(200).send({
+            message: "User registered successfully",
+            user: newUser
+        });
         
     } catch (error) {
         console.log(error);

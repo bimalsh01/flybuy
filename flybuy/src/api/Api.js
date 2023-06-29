@@ -10,3 +10,6 @@ const Api = axios.create({
 
 // test / route
 export const testApi = () => Api.get("/");
+
+// register route
+export const registerApi = (data) => Api.post("/api/users/register",data)

@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { registerApi } from '../api/Api'
+import { toast } from 'react-toastify'
 
 const Register = () => {
 
@@ -32,7 +34,18 @@ const Register = () => {
   //  on submit function
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(firstname, lastname, email, password, confpassword)
+    
+    // calling api 
+    registerApi({
+      fname: firstname,
+      lname: lastname,
+      email: email,
+      password: password
+    }).then(res => {
+       toast.success(res.data.message)
+    }).catch(err => {
+        toast.error('Registration failed!!')
+    })
   }
 
 

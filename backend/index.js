@@ -1,5 +1,6 @@
 // import packages
 const express = require('express');
+const cors = require('cors');
 
 const connectDB = require('./database/DB');
 
@@ -8,6 +9,15 @@ require('dotenv').config();
 
 // using express
 const app = express();
+
+// cors config
+const corsOptions = {
+    origin: true,
+    credentials: true,
+    optionSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 // connect to mongodb
 connectDB();
