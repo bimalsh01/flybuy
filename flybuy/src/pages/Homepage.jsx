@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { testApi } from '../api/Api'
 
 const Homepage = () => {
+
+  useEffect(() => {
+    testApi().then(res => {
+      console.log(res)
+    })
+  })
+
+
   return (
     <div className='container'>
       

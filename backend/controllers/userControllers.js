@@ -1,6 +1,6 @@
 const userModel = require('../model/userModel');
-
 const router = require('express').Router();
+const bcrypt = require('bcrypt');
 
 router.get('/test', (req,res) => {
     res.send('Welcome to FlyBuy USER API');
@@ -24,12 +24,16 @@ router.post('/register',async (req,res) => {
             return res.send("User already exists");
         }
 
+        // password hashing
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(password, salt);
+
         // STEP-4 Save user to database
         const newUser = new userModel({
             fname: fname,
             lname: lname,
             email: email,
-            password: password
+            password: hashPassword
         });
 
         // save user
