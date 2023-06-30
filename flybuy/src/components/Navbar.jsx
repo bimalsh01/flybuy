@@ -1,7 +1,19 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
+
+  const user = JSON.parse(localStorage.getItem('user'))
+
+  const navigate = useNavigate()
+
+  // logout function
+  const handleLogout = () => {
+    localStorage.clear()
+    navigate('/login')
+
+  }
+
   return (
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
@@ -34,18 +46,39 @@ const Navbar = () => {
             <li class="nav-item">
               <a class="nav-link" href="#">Search</a>
             </li>
-            
+
           </ul>
 
-          <div class="d-flex align-items-center">
-            <Link to={'/login'} type="button" class="btn btn-link px-3 me-2">
-              Login
-            </Link>
-            <Link to={'/register'} type="button" class="btn btn-primary me-3">
-              Sign up for free
-            </Link>
-            
-          </div>
+          {
+            user ? (
+              <div class="dropdown">
+                <button
+                  class="btn btn-primary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-mdb-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {user.fname}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li><Link class="dropdown-item" to={'/profile'}>Profile</Link></li>
+                  <li><button class="dropdown-item" onClick={handleLogout}>Logout</button></li>
+                </ul>
+              </div>
+            ) : (
+              <div class="d-flex align-items-center">
+                <Link to={'/login'} type="button" class="btn btn-link px-3 me-2">
+                  Login
+                </Link>
+                <Link to={'/register'} type="button" class="btn btn-primary me-3">
+                  Sign up for free
+                </Link>
+              </div>
+            )
+          }
+
+
         </div>
       </div>
     </nav>

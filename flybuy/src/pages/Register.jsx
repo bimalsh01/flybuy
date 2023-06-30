@@ -36,11 +36,11 @@ const Register = () => {
     e.preventDefault()
     
     // calling api 
-    registerApi({
-      fname: firstname,
-      lname: lastname,
-      email: email,
-      password: password
+      registerApi({
+        fname: firstname,
+        lname: lastname,
+        email: email,
+        password: password
     }).then(res => {
        toast.success(res.data.message)
     }).catch(err => {

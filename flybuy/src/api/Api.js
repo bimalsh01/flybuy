@@ -13,3 +13,6 @@ export const testApi = () => Api.get("/");
 
 // register route
 export const registerApi = (data) => Api.post("/api/users/register",data)
+
+//login route
+export const loginApi = (data) => Api.post("/api/users/login",data)

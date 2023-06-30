@@ -13,6 +13,7 @@ import Register from './pages/Register';
 // toastify
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/' element={<Homepage/>} />
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
+        <Route path='/profile' element={<Profile/>} />
 
         <Route path='/about' element={<h1>About us page</h1>} />
 
