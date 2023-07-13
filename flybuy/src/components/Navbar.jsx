@@ -62,7 +62,11 @@ const Navbar = () => {
                   {user.fname}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <li><Link class="dropdown-item" to={'/profile'}>Profile</Link></li>
+                  {
+                    user.isAdmin ? 
+                      (<li><Link class="dropdown-item" to={'/admin/dashboard'}>Admin Dashboard</Link></li>) 
+                    : (<li><Link class="dropdown-item" to={'/profile'}>Profile</Link></li>) 
+                  }
                   <li><button class="dropdown-item" onClick={handleLogout}>Logout</button></li>
                 </ul>
               </div>

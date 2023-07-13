@@ -27,10 +27,18 @@ app.use(express.json());
 
 // All route config
 app.use('/api/users', require('./controllers/userControllers'));
+app.use('/api/products', require('./controllers/productController'));
+
+// cloudinary config
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 
 // first test route
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
     res.send('Welcome to FlyBuy API');
 });
 

@@ -14,6 +14,7 @@ import Register from './pages/Register';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Profile from './pages/Profile';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 function App() {
   return (
@@ -25,8 +26,12 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
         <Route path='/profile' element={<Profile/>} />
-
         <Route path='/about' element={<h1>About us page</h1>} />
+
+
+        {/* Admin Route --------------------- */}
+        <Route path='/admin/dashboard' element={<AdminDashboard/>} />
+
 
       </Routes>
     </Router>
