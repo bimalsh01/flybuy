@@ -1,6 +1,8 @@
 // import packages
 const express = require('express');
 const cors = require('cors');
+const cloudinary = require('cloudinary').v2;
+const multipart = require('connect-multiparty');
 
 const connectDB = require('./database/DB');
 
@@ -24,6 +26,7 @@ connectDB();
 
 // middleware json
 app.use(express.json());
+app.use(multipart())
 
 // All route config
 app.use('/api/users', require('./controllers/userControllers'));
@@ -31,9 +34,9 @@ app.use('/api/products', require('./controllers/productController'));
 
 // cloudinary config
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+    cloud_name: 'kingsly',
+    api_key: '368993726257699',
+    api_secret: 't7wlk7UbEkBn--lCB4OhDJ-E4_U'
 });
 
 
