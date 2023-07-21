@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 
 const authGuard = (req,res, next) => {
     const authHeader = req.headers.authorization;
@@ -25,3 +26,5 @@ const authGuard = (req,res, next) => {
 
 
 };
+
+module.exports = authGuard;

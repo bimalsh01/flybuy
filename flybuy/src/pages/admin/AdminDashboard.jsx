@@ -1,29 +1,84 @@
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
+import { deleteProductApi, getAllProductsApi, productCreateApi } from '../../api/Api'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 const AdminDashboard = () => {
 
+    // useState
     const [productName, setProductName] = useState('')
-    const [productPrice, setProductPrice] = useState('')  
+    const [productPrice, setProductPrice] = useState('')
     const [productCategory, setProductCategory] = useState('')
     const [productDescription, setProductDescription] = useState('')
-    const [productImage, setProductImage] = useState('')
+    const [productImage, setProductImage] = useState(null)
+    const [previewImage, setPreviewImage] = useState(null)
 
-    // image upload
-    const handleImageUpload = (event) =>{
-        const file = event.target.files[0]
+    // for storing backend data
+    const [products, setProducts] = useState([])
+
+
+    // image upload function
+    const handleImageUpload = (event) => {
+        setProductImage(event.target.files[0])
         const reader = new FileReader()
 
-        reader.onload = () =>{
-            setProductImage(reader.result)
+        reader.onload = () => {
+            setPreviewImage(reader.result)
         }
 
-        if(file){
-            reader.readAsDataURL(file)
-        }
+        reader.readAsDataURL(event.target.files[0])
+
     }
 
+    // for creating product
     const handleSubmit = () => {
-        console.log(productName, productPrice)
+        const formData = new FormData();
+        formData.append('productName', productName)
+        formData.append('productPrice', productPrice)
+        formData.append('productCategory', productCategory)
+        formData.append('productDescription', productDescription)
+        formData.append('productImage', productImage)
+
+        productCreateApi(formData).then(res => {
+            toast.success("Product Created successfully!")
+        }).catch(err => {
+            toast.error("Product creation failed!")
+        })
+    }
+
+    // handle category change
+    const handleCategoryChange = (event) => {
+        setProductCategory(event.target.value);
+        setProductCategory(event.target.selectedOptions[0].text);
+    };
+
+
+    useEffect(() => {
+        getAllProductsApi().then(res => {
+            setProducts(res.data)
+        }).catch(err => {
+            console.log(err)
+        })
+    }, [getAllProductsApi])
+
+    // handle edit page route
+    const navigate = useNavigate()
+    const navigateToEditPage = (id) => {
+        navigate(`/admin/edit/${id}`)
+    }
+
+    // handle delete
+    const handleDelete = (id) => {
+        const confirmDialog = window.confirm("Are you sure you want to delete this product?")
+
+        if(confirmDialog){
+            deleteProductApi(id).then(res => {
+                window.location.reload()
+                toast.success("Product deleted successfully!")
+            }).catch(err => {
+                toast.error("Product deletion failed!")
+            })
+        }
     }
 
 
@@ -52,22 +107,26 @@ const AdminDashboard = () => {
 
                                     {/* select dropdown */}
                                     <label htmlFor="productCategory">Select product category</label>
-                                    <select class="form-select" onChange={(e) => setProductCategory(e.target.value)}>
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">Fashion</option>
-                                        <option value="2">Electronics</option>
-                                        <option value="3">Sports</option>
+                                    <select
+                                        className='form-select'
+                                        onChange={handleCategoryChange}
+                                    >
+                                        <option value=''>Open this select menu</option>
+                                        <option value='1'>Fashion</option>
+                                        <option value='2'>Electronics</option>
+                                        <option value='3'>Sports</option>
+                                        <option value='4'>Gadgets</option>
                                     </select>
 
                                     <label htmlFor="productDescription">Enter product description</label>
-                                    <textarea onChange={(e) => setProductDescription(e.target.value)} className='form-control' id='productDescription' rows='3'/>
-                                    
+                                    <textarea onChange={(e) => setProductDescription(e.target.value)} className='form-control' id='productDescription' rows='3' />
+
                                     {/* upload pic */}
                                     <label htmlFor="productImage">Upload product image</label>
                                     <input type="file" onChange={handleImageUpload} className='form-control' id='productImage' />
 
                                     {
-                                        productImage && <img src={productImage} height={'60px'}  className='mt-2 img-fluid w-100' alt="Product Image" />
+                                        previewImage && <img src={previewImage} height={'60px'} className='mt-2 img-fluid w-100' alt="Product Image" />
                                     }
 
 
@@ -95,21 +154,25 @@ const AdminDashboard = () => {
 
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <img width={70} src="https://www.si.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cg_xy_center%2Cq_auto:good%2Cw_1200%2Cx_776%2Cy_755/MTk0Njk2MDgyNjkxNzI4NTQ2/ja-morant-shoe.jpg" alt="Product image" />
-                        </td>
-                        <td>Nike Shoes</td>
-                        <td>NPR. 250</td>
-                        <td>Fashion</td>
-                        <td>High quality shoes</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-success">Edit</button>
-                                <button type="button" class="btn btn-danger">Delete</button>
-                            </div>
-                        </td>
-                    </tr>
+                    {
+                        products.map((product) => (
+                            <tr>
+                                <td>
+                                    <img width={70} src={product.productImage} alt="Product image" />
+                                </td>
+                                <td>{product.productName}</td>
+                                <td>NPR. {product.productPrice}</td>
+                                <td>{product.productCategory}</td>
+                                <td>{product.productDescription}</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-success" onClick={() => navigateToEditPage(product._id)}>Edit</button>
+                                        <button type="button" class="btn btn-danger" onClick={() => handleDelete(product._id)}>Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))
+                    }
                 </tbody>
             </table>
         </div>

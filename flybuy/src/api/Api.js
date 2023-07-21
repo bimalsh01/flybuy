@@ -8,6 +8,12 @@ const Api = axios.create({
     }
 });
 
+const config = {
+    headers:{
+        'Authorization' : `Beaer ${localStorage.getItem("token")}`,
+    }
+}
+
 // test / route
 export const testApi = () => Api.get("/");
 
@@ -18,4 +24,19 @@ export const registerApi = (data) => Api.post("/api/users/register",data)
 export const loginApi = (data) => Api.post("/api/users/login",data)
 
 // product create route
-export const productCreateApi = (data) => Api.post("/api/products/create",data)
+export const productCreateApi = (data) => Api.post("/api/products/create",data, config)
+
+
+// get all products route
+export const getAllProductsApi = () => Api.get("/api/products/get_products")
+
+// get single product route
+export const getSingleProductApi = (id) => Api.get(`/api/products/get_product/${id}`)
+
+
+// update product route
+export const updateProductApi = (id,data) => Api.put(`/api/products/update_product/${id}`, data,config)
+
+
+// delete product route
+export const deleteProductApi = (id) => Api.delete(`/api/products/delete_product/${id}`,config)
