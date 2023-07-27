@@ -2,11 +2,16 @@ import React, { useState } from 'react'
 import { loginApi } from '../api/Api'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { addUser } from '../store/userSlice'
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navgate = useNavigate()
+  
+  // for redux dispatch
+  const dispatch = useDispatch()
 
   const handleLogin = (e) => {
     e.preventDefault()
@@ -23,6 +28,10 @@ const Login = () => {
       // save token in local storage
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('user', JSON.stringify(res.data.user))
+      
+      // for redux dispatch
+      dispatch(addUser(res.data.user))
+
 
       toast.success(res.data.message)
 

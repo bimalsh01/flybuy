@@ -1,18 +1,23 @@
-import React, { useEffect } from 'react'
-import { testApi } from '../api/Api'
+import React, { useEffect, useState } from 'react'
+import { getAllProductsApi, testApi } from '../api/Api'
+import { Link } from 'react-router-dom'
 
 const Homepage = () => {
 
+  const [products, setProducts] = useState([])
+
   useEffect(() => {
-    testApi().then(res => {
-      console.log(res)
+    getAllProductsApi().then(res => {
+      setProducts(res.data)
+    }).catch(err => {
+      console.log(err)
     })
   })
 
 
   return (
     <div className='container'>
-      
+
       {/* paste here */}
       <div id="carouselExampleIndicators" class="carousel slide mt-4 rounded" data-mdb-ride="carousel">
         <div class="carousel-indicators">
@@ -57,6 +62,46 @@ const Homepage = () => {
           <span class="visually-hidden">Next</span>
         </button>
       </div>
+
+      <div className='mt-3'>
+
+        <div className='d-flex justify-content-between mb-3'>
+          <h3>
+            Explore our products
+          </h3>
+          <input type="text" className='form-control w-25' placeholder='Search products' />
+        </div>
+
+
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+
+          {
+            products.map(product => {
+              return <Link to={`/product/details/${product._id}`} class="col">
+                <div class="card">
+                  <img src={product.productImage} class="card-img-top object-cover" alt="Hollywood Sign on The Hill" width={'100px'} height={'220px'} />
+                  <div class="card-body">
+                    <div className="d-flex justify-content-between">
+                      <h5 class="card-title text-black">{product.productName}</h5>
+                      <h5 class="card-title text-black">NPR.{product.productPrice}</h5>
+                    </div>
+                    <hr />
+                    <p className="text-black">
+                      {product.productDescription.slice(0, 30)}
+                    </p>
+                    <button className="btn w-100 btn-outline-black">
+                      View more
+                    </button>
+                  </div>
+                </div>
+              </Link>
+            })
+          }
+        </div>
+
+
+      </div>
+
     </div>
   )
 }

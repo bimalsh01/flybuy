@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Profile from './pages/Profile';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminEditProduct from './pages/admin/AdminEditProduct';
+import ProductDetails from './pages/ProductDetails';
 
 function App() {
   return (
@@ -29,11 +30,11 @@ function App() {
         <Route path='/profile' element={<Profile/>} />
         <Route path='/about' element={<h1>About us page</h1>} />
 
+        <Route path='/product/details/:id' element={<ProductDetails/>} />
+
 
         {/* Admin Route --------------------- */}
         <Route path='/admin/dashboard' element={<AdminDashboard/>} />
-
-        
         <Route path='/admin/edit/:id' element={<AdminEditProduct/>} />
 
 
