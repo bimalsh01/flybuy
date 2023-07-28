@@ -17,6 +17,7 @@ import Profile from './pages/Profile';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminEditProduct from './pages/admin/AdminEditProduct';
 import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
 
 function App() {
   return (
@@ -28,6 +29,10 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
         <Route path='/profile' element={<Profile/>} />
+        <Route path='/cart' element={<Cart/>} />
+
+
+
         <Route path='/about' element={<h1>About us page</h1>} />
 
         <Route path='/product/details/:id' element={<ProductDetails/>} />

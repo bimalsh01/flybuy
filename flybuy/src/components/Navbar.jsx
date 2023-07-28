@@ -1,9 +1,16 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Navbar = () => {
 
   const user = JSON.parse(localStorage.getItem('user'))
+
+  // show cart items
+  const {cart} = useSelector((state) => ({
+      cart : state.cartSlice.cart
+  }))
+
 
   const navigate = useNavigate()
 
@@ -51,25 +58,33 @@ const Navbar = () => {
 
           {
             user ? (
-              <div class="dropdown">
-                <button
-                  class="btn btn-primary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-mdb-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  {user.fname}
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  {
-                    user.isAdmin ? 
-                      (<li><Link class="dropdown-item" to={'/admin/dashboard'}>Admin Dashboard</Link></li>) 
-                    : (<li><Link class="dropdown-item" to={'/profile'}>Profile</Link></li>) 
-                  }
-                  <li><button class="dropdown-item" onClick={handleLogout}>Logout</button></li>
-                </ul>
-              </div>
+              <>
+                <Link to={'/cart'} className='m-4'>
+                  <i class="fas fa-shopping-cart"></i>
+                  <span className='badge rounded-pill badge-notification bg-danger'>{cart.length}</span>
+                </Link>
+
+
+                <div class="dropdown">
+                  <button
+                    class="btn btn-primary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-mdb-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {user.fname}
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {
+                      user.isAdmin ?
+                        (<li><Link class="dropdown-item" to={'/admin/dashboard'}>Admin Dashboard</Link></li>)
+                        : (<li><Link class="dropdown-item" to={'/profile'}>Profile</Link></li>)
+                    }
+                    <li><button class="dropdown-item" onClick={handleLogout}>Logout</button></li>
+                  </ul>
+                </div>
+              </>
             ) : (
               <div class="d-flex align-items-center">
                 <Link to={'/login'} type="button" class="btn btn-link px-3 me-2">
