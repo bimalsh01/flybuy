@@ -40,3 +40,12 @@ export const updateProductApi = (id,data) => Api.put(`/api/products/update_produ
 
 // delete product route
 export const deleteProductApi = (id) => Api.delete(`/api/products/delete_product/${id}`,config)
+
+
+// create order route
+export const createOrderApi = (data) => Api.post("/api/orders/create",data,config)
+
+
+// get my orders route
+export const getMyOrdersApi = () => Api.get("/api/orders/myorders",config)
+export const getAllOrdersApi = () => Api.get("/api/orders/allorders",config)

@@ -18,6 +18,8 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminEditProduct from './pages/admin/AdminEditProduct';
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
+import Orders from './pages/Orders';
+import AdminOrders from './pages/admin/AdminOrders';
 
 function App() {
   return (
@@ -30,6 +32,7 @@ function App() {
         <Route path='/register' element={<Register/>} />
         <Route path='/profile' element={<Profile/>} />
         <Route path='/cart' element={<Cart/>} />
+        <Route path='/myorders' element={<Orders/>} />
 
 
 
@@ -40,6 +43,10 @@ function App() {
 
         {/* Admin Route --------------------- */}
         <Route path='/admin/dashboard' element={<AdminDashboard/>} />
+
+        <Route path='/admin/orders' element={<AdminOrders/>} />
+
+
         <Route path='/admin/edit/:id' element={<AdminEditProduct/>} />
 
 

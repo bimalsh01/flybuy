@@ -31,6 +31,7 @@ app.use(multipart())
 // All route config
 app.use('/api/users', require('./controllers/userControllers'));
 app.use('/api/products', require('./controllers/productController'));
+app.use('/api/orders', require('./controllers/orderController'));
 
 // cloudinary config
 cloudinary.config({

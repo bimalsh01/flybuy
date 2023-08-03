@@ -78,8 +78,16 @@ const Navbar = () => {
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     {
                       user.isAdmin ?
-                        (<li><Link class="dropdown-item" to={'/admin/dashboard'}>Admin Dashboard</Link></li>)
-                        : (<li><Link class="dropdown-item" to={'/profile'}>Profile</Link></li>)
+                        (<>
+                          <li><Link class="dropdown-item" to={'/admin/dashboard'}>Admin Dashboard</Link></li>
+                          <li><Link class="dropdown-item" to={'/admin/orders'}>Admin Orders</Link></li>
+                          <li><Link class="dropdown-item" to={'/myorders'}>My Orders</Link></li>
+                        
+                        </>)
+                        : (<>
+                            <li><Link class="dropdown-item" to={'/profile'}>Profile</Link></li>
+                            <li><Link class="dropdown-item" to={'/myorders'}>My Orders</Link></li>
+                        </>)
                     }
                     <li><button class="dropdown-item" onClick={handleLogout}>Logout</button></li>
                   </ul>
