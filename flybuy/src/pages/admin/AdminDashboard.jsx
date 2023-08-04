@@ -71,7 +71,7 @@ const AdminDashboard = () => {
     const handleDelete = (id) => {
         const confirmDialog = window.confirm("Are you sure you want to delete this product?")
 
-        if(confirmDialog){
+        if (confirmDialog) {
             deleteProductApi(id).then(res => {
                 window.location.reload()
                 toast.success("Product deleted successfully!")
@@ -84,6 +84,42 @@ const AdminDashboard = () => {
 
     return (
         <div className='container mt-3'>
+            <div className="row row-cols-1 row-cols-md-4 g-4">
+                <div className="col">
+                    <div class="card text-white bg-danger mb-3">
+                        <div class="card-header">Total products</div>
+                        <div class="card-body">
+                            <h1>12</h1>
+                        </div>
+                    </div>
+                </div>
+                <div className="col">
+                    <div class="card text-white bg-warning mb-3">
+                        <div class="card-header">Total pending Orders</div>
+                        <div class="card-body">
+                            <h1>12</h1>
+                        </div>
+                    </div>
+                </div>
+                <div className="col">
+                    <div class="card text-white bg-success mb-3">
+                        <div class="card-header">Total delivered orders</div>
+                        <div class="card-body">
+                            <h1>12</h1>
+                        </div>
+                    </div>
+                </div>
+                <div className="col">
+                    <div class="card text-white bg-success mb-3">
+                        <div class="card-header">Total users</div>
+                        <div class="card-body">
+                            <h1>12</h1>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <div className='d-flex justify-content-between'>
                 <h3>Admin Dashboard</h3>
                 <button type="button" class="btn btn-danger" data-mdb-toggle="modal" data-mdb-target="#exampleModal">

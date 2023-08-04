@@ -49,3 +49,10 @@ export const createOrderApi = (data) => Api.post("/api/orders/create",data,confi
 // get my orders route
 export const getMyOrdersApi = () => Api.get("/api/orders/myorders",config)
 export const getAllOrdersApi = () => Api.get("/api/orders/allorders",config)
+
+// update order status route
+export const updateOrderStatusApi = (id,data) => Api.put(`/api/orders/change_status/${id}`,data)
+
+
+// search products
+export const searchProductsApi = (query) => Api.get(`/api/products/search/${query}`)

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { getAllProductsApi, testApi } from '../api/Api'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Homepage = () => {
 
   const [products, setProducts] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     getAllProductsApi().then(res => {
@@ -13,6 +14,12 @@ const Homepage = () => {
       console.log(err)
     })
   })
+
+  const navigate = useNavigate()
+  const handleSearch = (e) => {
+    e.preventDefault()
+    navigate(`/search/${searchQuery}`)
+  }
 
 
   return (
@@ -69,7 +76,12 @@ const Homepage = () => {
           <h3>
             Explore our products
           </h3>
-          <input type="text" className='form-control w-25' placeholder='Search products' />
+          
+          <form action="">
+              <input type="text" className='form-control' placeholder='Search products' onChange={(e)=> setSearchQuery(e.target.value)} />
+              <button type='submit' hidden onClick={handleSearch}>Submit</button>
+          </form>
+
         </div>
 
 

@@ -75,4 +75,24 @@ router.get('/allorders', async (req, res) => {
     }
 });    
 
+
+// chnage order status
+router.put('/change_status/:id', async (req, res) => {
+    console.log(req.body);
+    try {
+        // find order by id
+        const order = await orderModal.findById(req.params.id);
+        order.status = req.body.status;
+        await order.save();
+        res.status(200).send({
+            success: true,
+            message: "Order Status Updated Successfully!",
+        })
+
+    } catch (error) {
+        res.status(500).send({error: error.message})
+    }
+
+});
+
 module.exports = router;
