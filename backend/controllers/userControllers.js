@@ -105,4 +105,11 @@ router.post('/login', async(req,res)=>{
     }
 })
 
+// FORGOT PASSWORD
+router.post('/forgot_password', async (req,res) => {
+    console.log(req.body);
+    res.send("Forgot Password");
+});
+
+
 module.exports = router;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { deleteProductApi, getAllProductsApi, productCreateApi } from '../../api/Api'
+import { countProductsApi, deleteProductApi, getAllProductsApi, productCreateApi } from '../../api/Api'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
@@ -12,6 +12,12 @@ const AdminDashboard = () => {
     const [productDescription, setProductDescription] = useState('')
     const [productImage, setProductImage] = useState(null)
     const [previewImage, setPreviewImage] = useState(null)
+
+    // count useState
+    const [countProducts, setCountProducts] = useState(0)
+    const [countPendingOrders, setCountPendingOrders] = useState(0)
+    const [countDeliveredOrders, setCountDeliveredOrders] = useState(0)
+    const [countUsers, setCountUsers] = useState(0)
 
     // for storing backend data
     const [products, setProducts] = useState([])
@@ -54,12 +60,25 @@ const AdminDashboard = () => {
 
 
     useEffect(() => {
+
         getAllProductsApi().then(res => {
             setProducts(res.data)
         }).catch(err => {
             console.log(err)
         })
-    }, [getAllProductsApi])
+
+        countProductsApi().then(res => {
+
+            setCountProducts(res.data.productCount)
+            setCountPendingOrders(res.data.pendingOrdersCount)
+            setCountDeliveredOrders(res.data.deliveredOrdersCount)
+            setCountUsers(res.data.userCount)
+
+        }).catch(err => {
+            console.log(err)
+        })
+
+    }, [getAllProductsApi, countProductsApi])
 
     // handle edit page route
     const navigate = useNavigate()
@@ -89,7 +108,7 @@ const AdminDashboard = () => {
                     <div class="card text-white bg-danger mb-3">
                         <div class="card-header">Total products</div>
                         <div class="card-body">
-                            <h1>12</h1>
+                            <h1>{countProducts}</h1>
                         </div>
                     </div>
                 </div>
@@ -97,7 +116,7 @@ const AdminDashboard = () => {
                     <div class="card text-white bg-warning mb-3">
                         <div class="card-header">Total pending Orders</div>
                         <div class="card-body">
-                            <h1>12</h1>
+                            <h1>{countPendingOrders}</h1>
                         </div>
                     </div>
                 </div>
@@ -105,7 +124,7 @@ const AdminDashboard = () => {
                     <div class="card text-white bg-success mb-3">
                         <div class="card-header">Total delivered orders</div>
                         <div class="card-body">
-                            <h1>12</h1>
+                            <h1>{countDeliveredOrders}</h1>
                         </div>
                     </div>
                 </div>
@@ -113,7 +132,7 @@ const AdminDashboard = () => {
                     <div class="card text-white bg-success mb-3">
                         <div class="card-header">Total users</div>
                         <div class="card-body">
-                            <h1>12</h1>
+                            <h1>{countUsers}</h1>
                         </div>
                     </div>
                 </div>

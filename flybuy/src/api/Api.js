@@ -56,3 +56,9 @@ export const updateOrderStatusApi = (id,data) => Api.put(`/api/orders/change_sta
 
 // search products
 export const searchProductsApi = (query) => Api.get(`/api/products/search/${query}`)
+
+// count products
+export const countProductsApi = () => Api.get("/api/products/get_count")
+
+// forgot password
+export const forgotPasswordApi = (data) => Api.post("/api/users/forgot_password",data)

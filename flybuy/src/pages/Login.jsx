@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { loginApi } from '../api/Api'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { addUser } from '../store/userSlice'
 
@@ -9,13 +9,31 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navgate = useNavigate()
+
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+
+  const validate = () => {
+    let isValid = true;
+    if(email.trim() === ''){
+      setEmailError('Email is required')
+      isValid = false
+    }
+    if(password.trim() === ''){
+      setPasswordError('Password is required')
+      isValid = false
+    }
+    return isValid
+  }
   
   // for redux dispatch
   const dispatch = useDispatch()
 
   const handleLogin = (e) => {
     e.preventDefault()
-    console.log(email, password)
+    if(!validate()){
+      return
+    }
 
     const data = {
       email: email,
@@ -54,13 +72,21 @@ const Login = () => {
 
           <label htmlFor="email">Enter your email</label> 
           <input onChange={(e)=> setEmail(e.target.value)} type="email" id='email' className='form-control' placeholder='abc@mail.com' />
-          
-          <label htmlFor="password">Enter your password</label> 
+          {
+            emailError && <small className='text-danger'>{emailError}</small>
+          }
+          <p>Enter your password</p> 
           <input onChange={(e) => setPassword(e.target.value)} type="password" id='password' className='form-control' placeholder='*********' />
-
+          {
+            passwordError && <small className='text-danger'>{passwordError}</small>
+          }
           <button className='btn btn-black mt-3 w-100' onClick={handleLogin}>
             Login Now
           </button>
+
+          <Link to={'/forgotpassword'}>
+            <p>Forgot you password?</p>
+          </Link>
 
         </form>        
     </div>

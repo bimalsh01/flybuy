@@ -1,5 +1,7 @@
 const authGuard = require('../auth/authGuard');
 const productModal = require('../model/productModal');
+const orderModal = require('../model/orderModal');
+const userModal = require('../model/userModel');
 
 const router = require('express').Router();
 const cloudinary = require('cloudinary');
@@ -172,6 +174,8 @@ router.get('/search/:name', async (req,res) => {
             }
         })
 
+        
+
         res.status(200).json({
             message: "Search results",
             products: products
@@ -180,6 +184,28 @@ router.get('/search/:name', async (req,res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json(error.message);
+    }
+});
+
+
+// count products, orders, users
+router.get('/get_count', async (req,res) => {
+    try {
+        const product = await productModal.countDocuments({});
+        const pendingOrders = await orderModal.countDocuments({status:'Pending'});
+        const deliveredOrders = await orderModal.countDocuments({status:'Delivered'})
+        const user = await userModal.countDocuments({});
+        
+        res.status(200).send({
+            productCount: product,
+            pendingOrdersCount: pendingOrders,
+            deliveredOrdersCount: deliveredOrders,
+            userCount: user
+        })
+
+        
+    } catch (error) {
+        res.json(error.message);
     }
 });
 

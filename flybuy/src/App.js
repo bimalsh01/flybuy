@@ -21,6 +21,7 @@ import Cart from './pages/Cart';
 import Orders from './pages/Orders';
 import AdminOrders from './pages/admin/AdminOrders';
 import Search from './pages/Search';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path='/myorders' element={<Orders/>} />
 
         <Route path='/search/:query' element={<Search/>} />
+        <Route path='/forgotpassword' element={<ForgotPassword/>} />
 
 
 
