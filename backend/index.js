@@ -21,6 +21,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// ejs config
+app.set('view engine', 'ejs')
+app.use(express.urlencoded({extended: true}))
+
 // connect to mongodb
 connectDB();
 
